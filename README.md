@@ -7,8 +7,6 @@ A dbt-snowflake project implements Medallion architecture.It creates a dbt/snowf
  - Gold: Dimensional star Schema (DimCustomer, DimProduct, DimSupplier, DimDate, FactSales)
 
 Run:
-  dbt deps
-  dbt seed
   dbt run
   dbt test
   dbt docs generate
