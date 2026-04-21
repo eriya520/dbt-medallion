@@ -1,0 +1,388 @@
+
+# version: 1
+
+models:
+  ### bronze layer 
+  - name: br_orderitem
+    description: "The raw data OrderItem table"
+    columns:
+      - name: Id
+        description: '{{ doc("OrderItemId") }}'
+        tests:
+          - unique
+          - not_null
+
+      - name: OrderId
+        description: '{{ doc("OrderId") }}'
+
+      - name: ProductId
+        description: '{{ doc("ProductId") }}'
+      
+      - name: UnitPrice
+        description: '{{ doc("UnitPrice") }}'
+
+      - name: Quantity
+        description: '{{ doc("Quantity") }}'
+
+
+  - name: br_order
+    description: "raw order table"
+    columns:
+      - name: Id
+        description: '{{ doc("OrderId") }}'
+        tests:
+          - unique
+          - not_null
+
+      - name: OrderDate
+        description: '{{ doc("OrderDate") }}'
+
+      - name: OrderNumber
+        description: '{{ doc("OrderNumber") }}'
+      
+      - name: CustomerId
+        description: '{{ doc("CustomerId")}}'
+
+      - name: TotalAmount
+        description: '{{ doc("TotalAmount") }}'
+ 
+
+  - name: br_product
+    description: "Raw product table"
+    columns:
+      - name: Id
+        description: '{{ doc("ProductId") }}'
+        tests:
+          - not_null
+          - unique
+      
+      - name: ProductName
+        description: '{{ doc("ProductName") }}'
+
+      - name: SupplierId
+        description: '{{ doc("SupplierId") }}'
+
+      - name: UnitPrice
+        description: '{{ doc("UnitPrice") }}'
+
+      - name: Package
+        description: '{{ doc("Package") }}'
+
+      - name: IsDiscontinued
+        description: '{{ doc("IsDiscontinued") }}'
+      
+  - name: br_supplier
+    description: "Raw supplier table"
+    columns:
+      - name: Id
+        description: '{{ doc("SupplierId") }}'
+        tests:
+          - unique
+          - not_null
+      
+      - name: CompanyName
+        description: '{{ doc("CompanyName") }}'
+
+      - name: ContactName
+        description: '{{ doc("ContactName") }}'
+
+      - name: ContactTitle
+        description: '{{ doc("ContactTitle") }}'
+
+      - name: City
+        description: '{{ doc("City") }}'
+
+      - name: Country
+        description: '{{ doc("Country") }}'
+
+      - name: Phone
+        description: '{{ doc("Phone") }}'
+
+      - name: Fax
+        description: '{{ doc("Fax") }}'
+
+  - name: br_customer
+    description: "Raw customer table"
+    columns:
+      - name: Id
+        description: '{{ doc("CustomerId") }}'
+        tests:
+          - unique
+          - not_null
+      
+      - name: FirstName
+        description: '{{ doc("FirstName") }}'
+
+      - name: LastName
+        description: '{{ doc("LastName") }}'
+
+      - name: City
+        description: '{{ doc("City")}}'
+
+      - name: Country
+        description: '{{ doc("Country") }}'
+
+      - name: Phone
+        description: '{{ doc("Phone") }}'
+  
+  ### silver layer 
+  - name: sl_customer
+    description: "cleaned customer table in silver layer"
+    columns:
+      - name: CustomerId
+        description: '{{ doc("CustomerId")}}'
+        tests:
+          - unique
+          - not_null
+      
+      - name: FirstName
+        description: '{{ doc("FirstName") }}'
+
+      - name: LastName
+        description: '{{ doc("LastName") }}'
+
+      - name: City
+        description: '{{ doc("City")}}'
+
+      - name: Country
+        description: '{{ doc("Country")}}'
+
+      - name: PhoneDigits
+        description: '{{ doc("PhoneDigits") }}'
+
+  - name: sl_product
+    description: "Silver layer product table"
+    columns:
+      - name: ProductId
+        description: '{{ doc("ProductId") }}'
+        tests:
+          - not_null
+          - unique
+      
+      - name: ProductName
+        description: '{{ doc("ProductName") }}'
+
+      - name: SupplierId
+        description: '{{ doc("SupplierId") }}'
+
+      - name: UnitPrice
+        description: '{{ doc("UnitPrice") }}'
+
+      - name: Package
+        description: '{{ doc("Package") }}'
+
+      - name: IsDiscontinued
+        description: '{{ doc("IsDiscontinued") }}'
+     
+  - name: sl_supplier
+    description: "Silver layer supplier table"
+    columns:
+      - name: SupplierId
+        description: '{{ doc("SupplierId") }}'
+        tests:
+          - unique
+          - not_null
+      
+      - name: CompanyName
+        description: '{{ doc("CompanyName") }}'
+
+      - name: ContactName
+        description: '{{ doc("ContactName") }}'
+
+      - name: City
+        description: '{{ doc("City") }}'
+
+      - name: Country
+        description: '{{ doc("Country") }}'
+
+      - name: PhoneDigits
+        description: '{{ doc("PhoneDigits") }}'
+
+  - name: sl_order
+    description: "silver layer cleaned order table"
+    columns:
+      - name: OrderId
+        description: '{{ doc("OrderId") }}'
+        tests:
+          - unique
+          - not_null
+
+      - name: OrderDate
+        description: '{{ doc("OrderDateFormatted") }}'
+      
+      - name: CustomerId
+        description: '{{ doc("CustomerId") }}'
+
+      - name: TotalAmount
+        description: '{{ doc("TotalAmount") }}'
+
+
+  - name: sl_orderitem
+    description: "silver layer cleaned orderitem table"
+    columns:
+      - name: OrderItemId
+        description: '{{ doc("OrderItemId") }}'
+        tests:
+          - unique
+          - not_null
+      
+      - name: OrderId
+        description: '{{ doc("OrderId") }}'
+
+      - name: ProductId
+        description: '{{ doc("ProductId") }}'
+      
+      - name: UnitPrice
+        description: '{{ doc("UnitPrice") }}'
+
+      - name: Quantity
+        description: '{{ doc("Quantity") }}'
+
+
+  ### gold layer 
+  - name: dim_product
+    description: "Gold layer product table"
+    columns:
+      - name: ProductKey
+        description: '{{ doc("ProductKey")}}'
+        tests:
+          - not_null
+          - unique
+      
+      - name: ProductId
+        description: '{{ doc("ProductId") }}'
+
+      - name: ProductName
+        description: '{{ doc("ProductName") }}'
+
+      - name: SupplierId
+        description: '{{ doc("SupplierId") }}'
+
+      - name: UnitPrice
+        description: '{{ doc("UnitPrice") }}'
+
+      - name: Package
+        description: '{{ doc("Package")}}'
+
+      - name: IsDiscontinued
+        description: '{{ doc("IsDiscontinued") }}'
+
+
+  - name: dim_customer
+    description: "Gold layer customer table"
+    columns:
+      - name: CustomerKey
+        description: '{{ doc("CustomerKey") }}'
+        tests:
+          - unique
+          - not_null
+
+      - name: CustomerId
+        description: '{{ doc("CustomerId") }}'
+
+      - name: FirstName
+        description: '{{ doc("FirstName") }}'
+
+      - name: LastName
+        description: '{{ doc("LastName") }}'
+
+      - name: City
+        description: '{{ doc("City") }}'
+
+      - name: Country
+        description: '{{ doc("Country") }}'
+
+      - name: Phone
+        description: '{{ doc("PhoneGold") }}'
+
+  - name: dim_date
+    description: "Gold layer Date table"
+    columns:
+      - name: DateKey
+        description: '{{ doc("DateKey") }}'
+        tests: 
+          - unique
+          - not_null
+
+      - name: Date
+        description: '{{ doc("Date") }}'    
+
+      - name: Day
+        description: '{{ doc("Day") }}'
+
+      - name: Month
+        description: '{{ doc("Month") }}'
+      
+      - name: Year
+        description: '{{ doc("Year") }}'
+      
+      - name: Quarter
+        description: '{{ doc("Quarter") }}'
+
+
+  - name: dim_supplier
+    description: "Gold layer Supplier table"
+    columns:
+      - name: SupplierKey
+        description: '{{ doc("SupplierKey") }}'
+        tests:
+          - unique
+          - not_null
+
+      - name: SupplierId
+        description: '{{ doc("SupplierId") }}'
+
+      - name: CompanyName
+        description: '{{ doc("CompanyName") }}'
+
+      - name: ContactName
+        description: '{{ doc("ContactName") }}'
+
+      - name: City
+        description: '{{ doc("City") }}'
+
+      - name: Country
+        description: '{{ doc("Country") }}'
+
+      - name: Phone
+        description: '{{ doc("PhoneGold") }}'
+
+  - name: fact_sales
+    description: 'Gold layer Fact sales table'
+    columns:
+      - name: SalesKey
+        description: '{{ doc("SalesKey") }}'
+        tests: 
+          - not_null
+          - unique
+
+      - name: OrderId
+        description: '{{ doc("OrderId") }}'
+        tests:
+          - not_null
+
+      - name: OrderItemId
+        description: '{{ doc("OrderItemId") }}'
+        tests:
+          - not_null
+        
+      - name: ProductKey
+        description: '{{ doc("ProductKey") }}'
+
+      - name: CustomerKey
+        description: '{{ doc("CustomerKey") }}'
+        
+      - name: SupplierKey
+        description: '{{ doc("SupplierKey") }}'
+
+      - name: DateKey
+        description: '{{ doc("DateKey") }}'
+
+      - name: Quantity
+        description: '{{ doc("Quantity") }}'
+      
+      - name: UnitPrice
+        description: '{{ doc("UnitPrice") }}'
+
+      - name: TotalAmount
+        description: '{{ doc("TotalAmount") }}'

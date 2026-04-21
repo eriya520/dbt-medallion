@@ -1,0 +1,23 @@
+dbt_medallion_project:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: ""
+      user: ""
+      password: ""
+      role: "ACCOUNTADMIN"
+      warehouse: DBT_WH
+      database: DBT_DB
+      schema: SNOWDEV
+      threads: 4
+    prod:
+      type: snowflake
+      account: ""
+      user: ""
+      password: ""
+      role: "ACCOUNTADMIN"
+      warehouse: DBT_WH
+      database: DBT_DB
+      schema: SNOWDEV
+      threads: 4
