@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: raw
+    database: dbt_db
+    schema: staging
+
+    tables:
+      - name: CUSTOMER
+      - name: PRODUCT
+      - name: SUPPLIER
+      - name: ORDER
+        quoting:
+          identifier: true
+      - name: ORDERITEM
