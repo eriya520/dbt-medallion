@@ -1,5 +1,5 @@
 select
-    {{ dbt.hash(['o.OrderId', 'oi.OrderItemId']) }} as SalesKeys,
+    md5(cast(o.OrderId) ||'-'|| cast(oi.OrderItemId as text)) as SalesKeys,
     o.OrderId,
     oi.OrderItemId,
     c.CustomerKey,

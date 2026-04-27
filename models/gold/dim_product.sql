@@ -1,5 +1,5 @@
 select
-    {{ dbt.hash(['ProductId']) }} as ProductKey,
+    md5(cast(ProductId as text)) as ProductKey,
     ProductId,
     ProductName,
     SupplierId,

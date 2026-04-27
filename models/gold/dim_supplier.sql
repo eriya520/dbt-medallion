@@ -1,5 +1,5 @@
 select
-    {{ dbt.hash(['SupplierId']) }} as SupplierKey,
+    md5(cast(SupplierId as text)) as SupplierKey,
     SupplierId,
     CompanyName,
     ContactName,
