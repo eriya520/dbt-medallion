@@ -1,6 +1,6 @@
 
 select
-    {{ dbt.hash(['CustomerId']) }}as CustomerKey,
+    md5(cast(CustomerId as text)) as CustomerKey,
     CustomerId,
     FirstName,
     LastName,

@@ -5,7 +5,7 @@ with base_dates as (
     where OrderDateFormatted is not null
 )
 select
-    {{ dbt.hash(['Date']) }} as DateKey,
+    md5(cast(Date as text)) as DateKey,
     Date,
     extract(day from Date) as Day,
     extract(month from Date) as Month,
